@@ -1,0 +1,22 @@
+@import './variables.scss';
+
+/*
+* Here we could pass some parameters to decide the color, even declare an array with the possible types (primary, secondary, info, etc.), and
+* only accept one of them, having `primary` by default.
+* 
+* Then, based on the main color hexadecimal, we could also create a function to determine if the text should be in black or white.
+*/
+
+@mixin button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background: none;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        border-color: white;
+        font-weight: bold;
+    }
+}
