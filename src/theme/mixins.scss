@@ -5,18 +5,20 @@
 * only accept one of them, having `primary` by default.
 * 
 * Then, based on the main color hexadecimal, we could also create a function to determine if the text should be in black or white.
+*
+* Same could be done with sizes.
 */
 
-@mixin button {
+@mixin button($dark: false) {
     padding: 10px;
     border-radius: 5px;
     border: 2px solid transparent;
     background: none;
-    color: white;
+    color: if($dark, black, white);
     cursor: pointer;
 
     &:hover {
-        border-color: white;
+        border-color: if($dark, black, white);
         font-weight: bold;
     }
 }

@@ -1,0 +1,13 @@
+@import '../../../../theme/mixins.scss';
+
+.home {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &__button {
+        @include button($dark: true);
+    }
+}

@@ -1,0 +1,14 @@
+
+<!-- Generated using the emmet abbreviations -->
+<table>
+    <tr>
+        <th *ngFor="let key of keys">{{key}}</th>
+    </tr>
+    <tr *ngFor="let row of table">
+        <td *ngFor="let key of keys">
+            <ng-container *ngIf="row.hasOwnProperty(key)">
+                {{ row[key] }}
+            </ng-container>
+        </td>
+    </tr>
+</table>

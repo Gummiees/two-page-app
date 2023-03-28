@@ -1,0 +1,24 @@
+@import '../theme/variables.scss';
+@import '../theme/mixins.scss';
+
+/* Using BEM as an example. The button for instance could be done by simply setting the class `.button` for example, which would be declared
+* under `styles.scss` with `@include button`.
+*
+* Perhaps a modifier like `.button--dark` (aka `&--dark`) would exist, with the `@include` instead being `@include button($dark:true)`.
+*/
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: $primary-color;
+
+    &__buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    &__button {
+        @include button;
+    }
+}
