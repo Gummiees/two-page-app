@@ -1,4 +1,4 @@
-# TwoPageApp
+# TwoPageApp <a href="https://github.com/Gummiees/two-page-app/actions/workflows/firebase-hosting-merge.yml"><img src="https://github.com/Gummiees/two-page-app/actions/workflows/firebase-hosting-merge.yml/badge.svg" alt="Firebase deployment" style="max-width: 100%;"></a>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 
