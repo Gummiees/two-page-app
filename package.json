@@ -1,12 +1,16 @@
 {
   "name": "two-page-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "emulate": "firebase emulators:start",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build": "ng build",
+    "buildpro": "ng build --configuration production",
+    "deploy": "firebase deploy",
+    "commit": "npm run check && git add . && git commit -m \"auto-commit\"",
+    "push": "npm run commit && git push"
   },
   "private": true,
   "dependencies": {
