@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Table } from './table.types';
+import { Row, Table } from './table.types';
 
 @Component({
   selector: 'app-table',
@@ -20,6 +20,8 @@ export class TableComponent {
     return this._table;
   }
 
+  @Output() onRowClick: EventEmitter<Row> = new EventEmitter();
+
   constructor() {}
 
   /* I did this to be more flexible than usual. This is because of the type we are accepting, we could receive two different object types on the
@@ -30,7 +32,9 @@ export class TableComponent {
   private getKeysFromTable(table: Table): string[] {
     const keys: string[] = [];
     table.forEach((row) => {
-      Object.keys(row).forEach((key) => keys.push(key));
+      Object.keys(row)
+        .filter((key) => !key.startsWith('_'))
+        .forEach((key) => keys.push(key));
     });
 
     return [...new Set(keys)];

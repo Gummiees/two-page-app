@@ -1,0 +1,16 @@
+<div class="task">
+    <app-table [table]="table" (onRowClick)="rowClicked($event)"></app-table>
+    <div [@openClose]="displayInfo ? 'open' : 'closed'" (@openClose.done)="onAnimationDone($event)" class="info">
+        <ng-container *ngIf="selectedRow">
+            <form class="post-form" formGroupName="form" (ngSubmit)="submit()">
+                <h2>{{selectedRow.name}}</h2>
+                <input id="title" placeholder="Post title" type="text" formControlName="title" required>
+                <textarea id="body" placeholder="Post body" formControlName="body" required></textarea>
+                <div class="post-form__buttons">
+                    <button class="button--failure" type="button" (click)="displayInfo = false">Unselect user</button>
+                    <button class="button--success" type="submit" [disabled]="!form.valid">Submit post</button>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+</div>

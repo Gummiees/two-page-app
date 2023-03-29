@@ -7,8 +7,8 @@ const routes: Routes = [
     loadChildren: () => import('./components/home/home.module').then((m) => m.HomeModule)
   },
   {
-    path: 'test',
-    loadChildren: () => import('./components/test/test.module').then((m) => m.TestModule)
+    path: 'task',
+    loadChildren: () => import('./components/task/task.module').then((m) => m.TaskModule)
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

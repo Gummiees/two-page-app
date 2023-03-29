@@ -16,6 +16,7 @@
     background: none;
     color: if($dark, black, white);
     cursor: pointer;
+    transition : border 150ms ease-out;
 
     &:hover {
         border-color: if($dark, black, white);

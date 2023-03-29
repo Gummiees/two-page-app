@@ -2,9 +2,10 @@
 <!-- Generated using the emmet abbreviations -->
 <table>
     <tr>
-        <th *ngFor="let key of keys">{{key}}</th>
+        <!-- Custom pipe -->
+        <th *ngFor="let key of keys">{{key | tableHeader}}</th>
     </tr>
-    <tr *ngFor="let row of table">
+    <tr *ngFor="let row of table" (click)="onRowClick.emit(row)">
         <td *ngFor="let key of keys">
             <ng-container *ngIf="row.hasOwnProperty(key)">
                 {{ row[key] }}
