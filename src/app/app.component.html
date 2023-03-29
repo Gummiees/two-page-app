@@ -1,4 +1,5 @@
-<main>
+<main class="main" [ngClass]="{'main--overlay': (overlay$ | async) }">
+  <app-overlay [show]="overlay$ | async"></app-overlay>
   <div class="topbar">
     <div class="topbar__buttons">
       <button [routerLink]="''" class="button">Home</button>

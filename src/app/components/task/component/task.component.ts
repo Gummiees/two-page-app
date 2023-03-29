@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Row } from '@shared/components/table/table.types';
 import { SubmitBody } from '@shared/models/api.models';
 import { ApiService } from '@shared/services/api.service';
+import { OverlayService } from '@shared/services/overlay.service';
 import { Subscription } from 'rxjs';
 import { UserInfo } from './task.models';
 
@@ -44,7 +45,7 @@ export class TaskComponent implements OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private overlayService: OverlayService) {
     this.observeUserInfo();
   }
 
@@ -74,12 +75,26 @@ export class TaskComponent implements OnDestroy {
       userId: this.selectedRow!._id,
       ...this.form.value
     };
+
+    this.overlayService.overlay = true;
     try {
       await this.apiService.submit(submitBody);
-      this.cleanSelected();
+      this.incrementCount(this.selectedRow!._id);
+      this.displayInfo = false;
+      alert('The request was done successfully');
     } catch {
       alert('Error: something went wrong');
+    } finally {
+      this.overlayService.overlay = false;
     }
+  }
+
+  private incrementCount(userId: number) {
+    const index = this.table.findIndex((val) => val._id === userId);
+    if (index < 0) {
+      return;
+    }
+    this.table[index].total_posts++;
   }
 
   private cleanSelected() {

@@ -19,13 +19,11 @@
 
     &:hover {
         border-color: if($dark, black, white);
-        font-weight: bold;
         cursor: pointer;
     }
 
     &:disabled {
         border-color: transparent;
-        font-weight: normal;
         cursor: default;
         opacity: 0.6;
     }

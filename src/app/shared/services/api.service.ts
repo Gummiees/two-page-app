@@ -29,8 +29,8 @@ export class ApiService {
     const info: UserInfo = {
       _id: user.id,
       name: user.name,
-      total_comments_on_posts: 0,
-      total_posts: 0
+      total_posts: 0,
+      total_comments_on_posts: 0
     };
     const usersPosts = posts.filter((post) => post.userId === user.id);
     info.total_posts = usersPosts.length;

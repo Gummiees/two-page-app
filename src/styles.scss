@@ -2,7 +2,13 @@
 
 body, main {
     margin: 0;
+    font-family: 'Open Sans', sans-serif;
 }
+
+textarea, input, button {
+    font-family: inherit;
+    font-size: inherit;
+ }
 
 .button {
     @include button;
@@ -32,10 +38,6 @@ body, main {
     &--failure, &--success {
         @extend .button;
         border: 4px solid transparent;
-
-        &:hover {
-            font-weight: normal;
-        }
 
         &:disabled {
             border-color: transparent;
