@@ -1,9 +1,10 @@
 import { animate, AnimationEvent, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Row } from '@shared/components/table/table.types';
 import { SubmitBody } from '@shared/models/api.models';
 import { ApiService } from '@shared/services/api.service';
+import { Subscription } from 'rxjs';
 import { UserInfo } from './task.models';
 
 @Component({
@@ -31,18 +32,24 @@ import { UserInfo } from './task.models';
     ])
   ]
 })
-export class TaskComponent {
+export class TaskComponent implements OnDestroy {
   public table: UserInfo[] = [];
   public selectedRow: UserInfo | null = null;
   public displayInfo: boolean = false;
 
   public form: FormGroup = new FormGroup({
-    title: new FormControl(null, [Validators.required]),
-    body: new FormControl(null, [Validators.required])
+    title: new FormControl(null, Validators.required),
+    body: new FormControl(null, Validators.required)
   });
 
+  private subscription?: Subscription;
+
   constructor(private apiService: ApiService) {
-    this.initTable();
+    this.observeUserInfo();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   public rowClicked(row: Row) {
@@ -60,11 +67,12 @@ export class TaskComponent {
     if (!this.selectedRow) {
       alert('Error: No selected row');
     }
-    const val = this.form.value;
+    if (!this.form.valid) {
+      alert('Error: Form is not valid');
+    }
     const submitBody: SubmitBody = {
       userId: this.selectedRow!._id,
-      title: this.form.controls['title'].value,
-      body: this.form.controls['body'].value
+      ...this.form.value
     };
     try {
       await this.apiService.submit(submitBody);
@@ -80,24 +88,7 @@ export class TaskComponent {
     // TODO: tell the table to not highlight the row
   }
 
-  private async initTable() {
-    const users = await this.apiService.getUsers();
-    const posts = await this.apiService.getPosts();
-    const comments = await this.apiService.getComments();
-
-    this.table = users.map((user) => {
-      const info: UserInfo = {
-        _id: user.id,
-        name: user.name,
-        total_comments_on_posts: 0,
-        total_posts: 0
-      };
-      const usersPosts = posts.filter((post) => post.userId === user.id);
-      info.total_posts = usersPosts.length;
-      info.total_comments_on_posts = comments.filter((comment) =>
-        usersPosts.map((post) => post.id).includes(comment.postId)
-      ).length;
-      return info;
-    });
+  private observeUserInfo() {
+    this.subscription = this.apiService.getUsersInfo().subscribe((info) => (this.table = info));
   }
 }

@@ -15,11 +15,18 @@
     border: 2px solid transparent;
     background: none;
     color: if($dark, black, white);
-    cursor: pointer;
     transition : border 150ms ease-out;
 
     &:hover {
         border-color: if($dark, black, white);
         font-weight: bold;
+        cursor: pointer;
+    }
+
+    &:disabled {
+        border-color: transparent;
+        font-weight: normal;
+        cursor: default;
+        opacity: 0.6;
     }
 }

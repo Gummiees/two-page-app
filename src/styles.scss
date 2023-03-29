@@ -11,15 +11,6 @@ body, main {
         @include button($dark: true);
     }
 
-    &--failure, &--success{
-        @extend .button;
-        border: 4px solid transparent;
-
-        &:hover {
-            font-weight: normal;
-        }
-    }
-
     &--success {
         border-color: $success-color;
         background-color: $success-color;
@@ -35,6 +26,19 @@ body, main {
 
         &:hover {
             border-color: $failure-light-color;
+        }
+    }
+
+    &--failure, &--success {
+        @extend .button;
+        border: 4px solid transparent;
+
+        &:hover {
+            font-weight: normal;
+        }
+
+        &:disabled {
+            border-color: transparent;
         }
     }
 }
