@@ -6,8 +6,8 @@ TODO:
 - [x] Highlight row
 - [x] Stop hightlighting row
 - [ ] Language toggle
-- [ ] Improve API map
-- [ ] Make sure it's responsive
+- [x] Improve API map
+- [x] Make sure it's responsive
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
 

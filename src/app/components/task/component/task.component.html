@@ -4,11 +4,11 @@
         <ng-container *ngIf="selectedUser">
             <form class="post-form" [formGroup]="form" (ngSubmit)="submit()">
                 <h2>{{selectedUser.name}}</h2>
-                <input id="title" placeholder="Post title" type="text" formControlName="title" required autofocus>
-                <textarea id="body" placeholder="Post body" formControlName="body" required rows="10"></textarea>
+                <input id="title" i18n-placeholder-title placeholder="Post title" type="text" formControlName="title" required autofocus>
+                <textarea id="body" i18n-placeholder-body placeholder="Post body" formControlName="body" required rows="10"></textarea>
                 <div class="post-form__buttons">
-                    <button class="button--failure" type="button" (click)="unselectUser()">Unselect user</button>
-                    <button class="button--success" type="submit" [disabled]="form.invalid">Submit post</button>
+                    <button class="button--failure" type="button" (click)="unselectUser()" i18n>Unselect user</button>
+                    <button class="button--success" type="submit" [disabled]="form.invalid" i18n>Submit post</button>
                 </div>
             </form>
         </ng-container>

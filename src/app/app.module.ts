@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@shared/components/overlay/overlay.module';
@@ -15,9 +16,10 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    OverlayModule
+    OverlayModule,
+    FormsModule
   ],
-  providers: [OverlayService],
+  providers: [OverlayService, Location],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

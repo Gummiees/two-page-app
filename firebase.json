@@ -1,6 +1,9 @@
 {
   "hosting": {
     "public": "dist/two-page-app",
+    "i18n": {
+      "root": "/"
+    },
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,7 +12,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/en-US/index.html"
       }
     ]
   }

@@ -51,3 +51,11 @@ textarea, input, button {
     align-items: center;
     padding: 25px;
 }
+
+@media (max-width: 768px) {
+    .button {
+        &--failure, &--success {
+            padding: 5px;
+        }
+    }
+}

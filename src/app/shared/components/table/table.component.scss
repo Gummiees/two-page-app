@@ -1,5 +1,12 @@
 @import '../../../../theme/variables.scss';
 
+/* To me, tables are never going to really be responsive. For a mobile screen, you always have to compromise something, either information or style.
+*
+* What I'd do instead of a table for a mobile screen is implementing something similar to `<details>`, where you show a summary and the rest of
+* the information is hidden unless the user clicks on it to display it. Here you'd still be compromising speed, though, as it'd be quicker for
+* the user to have all the information at once.
+*/
+
 .table {
     width: 100%;
     border-collapse: collapse;

@@ -2,11 +2,11 @@
   <app-overlay [show]="overlay$ | async"></app-overlay>
   <div class="topbar">
     <div class="topbar__buttons">
-      <button [routerLink]="''" class="button">Home</button>
-      <button [routerLink]="'task'" class="button">Task</button>
+      <button [routerLink]="''" class="button" i18n>Home</button>
+      <button [routerLink]="'task'" class="button" i18n>Task</button>
     </div>
-    <select class="topbar__select" id="lang" name="lang">
-      <option value="en" selected>En</option>
+    <select class="topbar__select" [(ngModel)]="lang" (change)="onChange()">
+      <option value="en-US">En</option>
       <option value="es">Es</option>
     </select>
   </div>
