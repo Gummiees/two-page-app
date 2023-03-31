@@ -1,0 +1,29 @@
+@import '../../../../theme/variables.scss';
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    &, &__cell {
+        border: 1px solid;
+    }
+
+    &__cell {
+        padding: 5px 10px;
+    }
+
+    &__header {
+        text-align: left;
+    }
+
+    &__row {
+        &:nth-child(even) {
+            background-color: $primary-light-color;
+        }
+
+        &--highlighted {
+            background-color: $primary-dark-color !important;
+            color: white;
+        }
+    }
+}

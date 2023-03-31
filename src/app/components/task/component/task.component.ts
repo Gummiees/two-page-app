@@ -6,7 +6,7 @@ import { SubmitBody } from '@shared/models/api.models';
 import { ApiService } from '@shared/services/api.service';
 import { OverlayService } from '@shared/services/overlay.service';
 import { Subscription } from 'rxjs';
-import { UserInfo } from './task.models';
+import { UserInfo, UserInfoRow } from './task.models';
 
 @Component({
   selector: 'app-task',
@@ -34,8 +34,8 @@ import { UserInfo } from './task.models';
   ]
 })
 export class TaskComponent implements OnDestroy {
-  public table: UserInfo[] = [];
-  public selectedRow: UserInfo | null = null;
+  public table: UserInfoRow[] = [];
+  public selectedUser: UserInfo | null = null;
   public displayInfo: boolean = false;
 
   public form: FormGroup = new FormGroup({
@@ -46,7 +46,7 @@ export class TaskComponent implements OnDestroy {
   private subscription?: Subscription;
 
   constructor(private apiService: ApiService, private overlayService: OverlayService) {
-    this.observeUserInfo();
+    this.observeTable();
   }
 
   ngOnDestroy(): void {
@@ -54,8 +54,12 @@ export class TaskComponent implements OnDestroy {
   }
 
   public rowClicked(row: Row) {
-    this.selectedRow = row as UserInfo;
+    const userInfoRow = row as UserInfoRow;
+    this.selectedUser = { ...userInfoRow };
     this.displayInfo = true;
+    // Just in case the user clicks a different row while having a row already selected
+    this.unhighlightAll();
+    this.highlightRow(userInfoRow, true);
   }
 
   public onAnimationDone(event: AnimationEvent) {
@@ -65,21 +69,22 @@ export class TaskComponent implements OnDestroy {
   }
 
   public async submit() {
-    if (!this.selectedRow) {
+    if (!this.selectedUser) {
       alert('Error: No selected row');
     }
     if (!this.form.valid) {
       alert('Error: Form is not valid');
     }
     const submitBody: SubmitBody = {
-      userId: this.selectedRow!._id,
+      userId: this.selectedUser!._id,
       ...this.form.value
     };
 
     this.overlayService.overlay = true;
     try {
       await this.apiService.submit(submitBody);
-      this.incrementCount(this.selectedRow!._id);
+      this.incrementCount(this.selectedUser!._id);
+      this.highlightUser(this.selectedUser!, false);
       this.displayInfo = false;
       alert('The request was done successfully');
     } catch {
@@ -87,6 +92,31 @@ export class TaskComponent implements OnDestroy {
     } finally {
       this.overlayService.overlay = false;
     }
+  }
+
+  public unselectUser() {
+    if (this.selectedUser) {
+      this.highlightUser(this.selectedUser, false);
+    }
+    this.displayInfo = false;
+  }
+
+  private unhighlightAll() {
+    // I could have used the filter without using `some` to not go through the array again, but I wanted to use more array functions on the challenge.
+    if (this.table.some((row) => row._highlighted)) {
+      this.table.filter((row) => row._highlighted).forEach((row) => (row._highlighted = false));
+    }
+  }
+
+  private highlightUser(user: UserInfo, highlight: boolean) {
+    const row = this.findRow(user);
+    if (row) {
+      this.highlightRow(row, highlight);
+    }
+  }
+
+  private highlightRow(row: UserInfoRow, highlight: boolean) {
+    this.table.find((_row) => _row._id === row!._id)!._highlighted = highlight;
   }
 
   private incrementCount(userId: number) {
@@ -98,12 +128,30 @@ export class TaskComponent implements OnDestroy {
   }
 
   private cleanSelected() {
-    this.selectedRow = null;
+    this.selectedUser = null;
     this.form.reset();
-    // TODO: tell the table to not highlight the row
   }
 
-  private observeUserInfo() {
-    this.subscription = this.apiService.getUsersInfo().subscribe((info) => (this.table = info));
+  private findRow(user: UserInfo): UserInfoRow | null {
+    if (!user || !this.table) {
+      return null;
+    }
+
+    return this.table.find((row) => row._id === user._id) ?? null;
+  }
+
+  private observeTable() {
+    this.subscription = this.apiService
+      .getUsersInfo()
+      .subscribe((usersInfo) => (this.table = this.parseToTable(usersInfo)));
+  }
+
+  private parseToTable(usersInfo: UserInfo[]): UserInfoRow[] {
+    return usersInfo.map((userInfo) => {
+      return {
+        ...userInfo,
+        _highlighted: false
+      };
+    });
   }
 }

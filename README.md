@@ -3,8 +3,8 @@
 TODO:
 
 - [ ] Readme
-- [ ] Highlight row
-- [ ] Stop hightlighting row
+- [x] Highlight row
+- [x] Stop hightlighting row
 - [ ] Language toggle
 - [ ] Improve API map
 - [ ] Make sure it's responsive

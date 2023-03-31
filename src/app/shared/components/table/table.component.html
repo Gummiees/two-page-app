@@ -1,12 +1,12 @@
 
 <!-- Generated using the emmet abbreviations -->
-<table>
-    <tr>
+<table class="table">
+    <tr class="table__header">
         <!-- Custom pipe -->
-        <th *ngFor="let key of keys">{{key | tableHeader}}</th>
+        <th class="table__cell" *ngFor="let key of keys">{{key | tableHeader}}</th>
     </tr>
-    <tr *ngFor="let row of table" (click)="onRowClick.emit(row)">
-        <td *ngFor="let key of keys">
+    <tr *ngFor="let row of table" class="table__row" [ngClass]="{'table__row--highlighted': row['_highlighted']}" (click)="rowClicked(row)">
+        <td class="table__cell" *ngFor="let key of keys">
             <ng-container *ngIf="row.hasOwnProperty(key)">
                 {{ row[key] }}
             </ng-container>

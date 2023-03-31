@@ -7,6 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class OverlayComponent {
   @Input() show: boolean | null = null;
-
-  constructor() {}
 }
